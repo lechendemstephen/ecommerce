@@ -1,0 +1,76 @@
+{% extends 'ecommerce/includes/base.html' %}
+{% block content %}
+
+
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Shopping Cart</h2>
+    
+    <!-- Cart Table -->
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Unit Price</th>
+            <th scope="col">Total</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Example Cart Item -->
+           {% for cartitem in cartitems %}
+          <tr>
+            <td>
+              <div class="d-flex align-items-center">
+                <img src="{{ cartitem.product.img.url }}" class="img-fluid" alt="Product" style="width: 50px; height: 50px; margin-right: 10px;">
+                <div> {{ cartitem.product.name }}</div>
+              </div>
+            </td>
+            <td>
+              <input type="number" class="form-control" value="{{ cartitem.quantity }}" min="1" style="width: 80px;">
+            </td>
+            <td>${{ cartitem.product.price }}</td>
+            <td>$ {{ cartitem.total_unit_price }} </td>
+            <td>
+              <a href="{% url 'delete_cart' cartitem.product.id  %}" class="btn btn-danger btn-sm" > Remove </a>
+            </td>
+          </tr>
+          {% endfor %}
+          <!-- More items can be added here -->
+
+        </tbody>
+      </table>
+    </div>
+    
+    <!-- Cart Summary -->
+    <div class="row justify-content-end">
+      <div class="col-md-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Cart Summary</h5>
+            <p class="card-text">Subtotal: ${{ grand_total }}</p>
+            <p class="card-text">Shipping: Free</p>
+            <hr>
+            <p class="card-text"><strong>Total: $30.00</strong></p>
+            <button class="btn btn-success btn-block">Proceed to Checkout</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}
